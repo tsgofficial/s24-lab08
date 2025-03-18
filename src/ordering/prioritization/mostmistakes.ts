@@ -1,8 +1,8 @@
 import { CardStatus } from '../../cards/cardstatus.js'
 import { CardOrganizer } from '../cardorganizer.js'
 
-function newMostMistakesFirstSorter (): CardOrganizer {
-  function numberOfFailures (cardStatus: CardStatus): number {
+function newMostMistakesFirstSorter(): CardOrganizer {
+  function numberOfFailures(cardStatus: CardStatus): number {
     return cardStatus.getResults().filter((e) => !e).length
   };
 

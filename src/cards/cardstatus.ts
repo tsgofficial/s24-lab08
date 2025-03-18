@@ -33,7 +33,7 @@ interface CardStatus {
  *
  * @param card The {@link FlashCard} card to track answer correctness for.
  */
-function newCardStatus (card: FlashCard): CardStatus {
+function newCardStatus(card: FlashCard): CardStatus {
   let successes: boolean[] = []
   return {
     getCard: function (): FlashCard { return card },

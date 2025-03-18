@@ -40,15 +40,21 @@ interface CardStore {
 function newInMemoryCardStore (initialCards: FlashCard[]): CardStore {
   const cards: FlashCard[] = initialCards.slice()
   return {
-    getAllCards: function (): FlashCard[] { return cards.slice() },
+    getAllCards: function (): FlashCard[] {
+      return cards.slice()
+    },
     addCard: function (card: FlashCard): boolean {
-      if (cards.some(v => v.equals(card))) { return false }
+      if (cards.some((v) => v.equals(card))) {
+        return false
+      }
       cards.push(card)
       return true
     },
     removeCard: function (card: FlashCard): boolean {
       const idx = cards.indexOf(card)
-      if (idx === -1) { return false }
+      if (idx === -1) {
+        return false
+      }
       cards.splice(idx, 1)
       return true
     },
@@ -59,11 +65,13 @@ function newInMemoryCardStore (initialCards: FlashCard[]): CardStore {
      */
     invertCards: function (): CardStore {
       const newCards: FlashCard[] = []
-      for (const card of cards) { newCards.push(newFlashCard(card.getAnswer(), card.getQuestion())) }
+      for (const card of cards) {
+        newCards.push(newFlashCard(card.getAnswer(), card.getQuestion()))
+      }
       return newInMemoryCardStore(newCards)
     }
   }
-};
+}
 
 function loadCards (file: string): CardStore {
   const lines: string[] = fs.readFileSync(file).toString().split(/\r?\n/)
@@ -71,13 +79,12 @@ function loadCards (file: string): CardStore {
   for (const line of lines) {
     const idx = line.indexOf('--')
     if (idx > 0) {
-      result.push(newFlashCard(
-        line.substring(idx + 2),
-        line.substring(0, idx)
-      ))
-    };
-  };
+      result.push(
+        newFlashCard(line.substring(idx + 2), line.substring(0, idx))
+      )
+    }
+  }
   return newInMemoryCardStore(result)
-};
+}
 
 export { newInMemoryCardStore, CardStore, loadCards }
